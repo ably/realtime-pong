@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pong</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <button id="start" class="btn btn-primary btn-lg">Start</button>
+      <button id="open-controller" class="btn btn-danger btn-lg">Open controller</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <h1>Pubnub</h1>
+      <canvas id="pubnub-native"></canvas>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <h1>Pubnub translator</h1>
+      <canvas id="pubnub-translator"></canvas>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <h1>Ably</h1>
+      <canvas id="ably"></canvas>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <h1>Pusher</h1>
+      <canvas id="pusher-native"></canvas>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <h1>Pusher translator</h1>
+      <canvas id="pusher-translator"></canvas>
+    </div>
+  </div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="http://cdn.pubnub.com/pubnub.js"></script>
+<script src="http://js.pusher.com/3.1/pusher.js"></script>
+<script src="http://cdn.ably.io/lib/ably.js"></script>
+<script src="js/game.js" type="text/javascript"></script>
+<script src="js/pong.js" type="text/javascript"></script>
+<script src="js/pubgame.js" type="text/javascript"></script>
+<script src="js/utils.js" type+"text/javascript"></script>
+<script type="text/javascript">
+
+  window.pong = { games: {} };
+  window.pong.sessionId = Math.random().toString().slice(2, 8);
+
+  Game.ready(function() {
+    _.each([
+      'pubnub-native',
+      'pubnub-translator',
+      'ably',
+      'pusher-native',
+      'pusher-translator',
+    ], function(id) {
+      Game.start(id, Pong, { sound: false, });
+    })
+
+    $(document).ready( function() {
+      $('#start').click(function() {
+        for(var pongGame in window.pong.games) {
+          window.pong.games[pongGame].startSinglePlayer();
+        }
+      });
+    });
+  });
+
+  function openController() {
+    var controller = window.open('./controller.html?id=' + window.pong.sessionId, 'controller', 'height=400,width=200');
+    if (window.focus) { controller.focus() }
+  }
+  $('#open-controller').click(openController);
+
+</script>
+</body>
+</html>
+
