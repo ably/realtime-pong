@@ -2,35 +2,26 @@ $(document).ready(function(){
     $("#controls").show();
 
     var id = getURLParameter('id'),
-      channelName = 'pong:' + id,
-      pusherChannelName = 'private-pong;' + id,
+      channelName = 'private:pong-' + id,
+      pusherChannelName = 'private-pong-' + id,
       realtimes = getRealtimes(),
-      mySide = "left";
-      var pusherChannel = realtimes.pusher_native.subscribe(pusherChannelName),
-      pusherTranslatorChannel = realtimes.pusher_translator.subscribe(pusherChannelName);
+      mySide = "left",
+      pusherChannel = realtimes.pusher_native.subscribe(pusherChannelName),
+      ablyChannel = realtimes.ably.channels.get(channelName);
 
     document.ontouchstart = function(e){
       e.preventDefault();
     }
 
     var publishAction = function(action) {
-        console.log(new Date(), "publishing", action)
+      ablyChannel.publish('client-pong', action);
 
-        realtimes.pubnub_native.publish({
-            channel: channelName,
-            message: action
-        });
+      pusherChannel.trigger('client-pong', action);
 
-        realtimes.pubnub_translator.publish({
-            channel: channelName,
-            message: action
-        });
-
-        realtimes.ably.channels.get(channelName).publish('pong', action);
-
-        pusherChannel.trigger('client-pong', action);
-
-        pusherTranslatorChannel.trigger('client-pong', action);
+      realtimes.pubnub_native.publish({
+        channel: channelName,
+        message: action
+      });
     }
 
     var touchHandler = function(eve) {

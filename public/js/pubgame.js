@@ -43,32 +43,32 @@ $(document).ready(function () {
     };
 
     var id = window.pong.sessionId,
-      channel = 'pong:' + id,
-      pusherChannel = 'private-pong;' + id,
+      channelName = 'private:pong-' + id,
+      pusherChannelName = 'private-pong-' + id,
       realtimes = getRealtimes();
 
-    console.log("Pubnub: subscribing to " + channel);
+    console.log("Pubnub: subscribing to " + channelName);
     realtimes.pubnub_native.subscribe({
-        channel: channel,
-        callback: pongCb('pubnub-native')
+      channel: channelName,
+      callback: pongCb('pubnub-native')
     });
 
-    console.log("Pubnub translator: subscribing to " + channel);
+    console.log("Pubnub translator: subscribing to " + channelName);
     realtimes.pubnub_translator.subscribe({
-        channel: channel,
-        callback: pongCb('pubnub-translator')
+      channel: channelName,
+      callback: pongCb('pubnub-translator')
     });
 
-    console.log("Ably: subscribing to " + channel);
+    console.log("Ably: subscribing to " + channelName);
     var ablyCb = pongCb('ably');
-    realtimes.ably.channels.get(channel).subscribe('pong', function(msg) { ablyCb(msg.data) });
+    realtimes.ably.channels.get(channelName).subscribe('client-pong', function(msg) { ablyCb(msg.data) });
 
-    console.log("Pusher: subscribing to " + 'private-' + channel);
-    var pusher_channel = realtimes.pusher_native.subscribe(pusherChannel);
-    pusher_channel.bind('client-pong', pongCb('pusher-native'));
+    console.log("Pusher: subscribing to " + pusherChannelName);
+    var pusherChannel = realtimes.pusher_native.subscribe(pusherChannelName);
+    pusherChannel.bind('client-pong', pongCb('pusher-native'));
 
-    console.log("Pusher translator: subscribing to " + 'private-' + channel);
-    var pusher_translator_channel = realtimes.pusher_translator.subscribe(pusherChannel);
-    pusher_translator_channel.bind('client-pong', pongCb('pusher-translator'));
+    console.log("Pusher translator: subscribing to " + pusherChannelName);
+    var pusherTranslatorChannel = realtimes.pusher_translator.subscribe(pusherChannelName);
+    pusherTranslatorChannel.bind('client-pong', pongCb('pusher-translator'));
 
 });
