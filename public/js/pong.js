@@ -1,11 +1,11 @@
 Pong = {
 
   Defaults: {
-    width:        640,   // logical canvas width (browser will scale to physical canvas size - which is controlled by @media css queries)
-    height:       480,   // logical canvas height (ditto)
-    wallWidth:    12,
-    paddleWidth:  12,
-    paddleHeight: 60,
+    width:        400,   // logical canvas width (browser will scale to physical canvas size - which is controlled by @media css queries)
+    height:       300,   // logical canvas height (ditto)
+    wallWidth:    9,
+    paddleWidth:  9,
+    paddleHeight: 40,
     paddleSpeed:  1.5,
     ballSpeed:    4,     // should be able to cross court horizontally in 4 seconds, at starting speed ...
     ballAccel:    8,     // ... but accelerate as time passes
