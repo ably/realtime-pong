@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'sinatra/cross_origin'
 require 'json'
 require 'pusher'
 
@@ -20,7 +19,6 @@ pusher_translator = Pusher::Client.new(
 )
 
 post '/auth/pusher' do
-  cross_origin
   content_type :json
   if (channel_name = params[:channel_name]).start_with? "private-pong"
     pusher.authenticate(channel_name, params[:socket_id]).to_json
@@ -30,7 +28,6 @@ post '/auth/pusher' do
 end
 
 post '/auth/pusher-translator' do
-  cross_origin
   content_type :json
   if (channel_name = params[:channel_name]).start_with? "private-pong"
     pusher_translator.authenticate(channel_name, params[:socket_id]).to_json
