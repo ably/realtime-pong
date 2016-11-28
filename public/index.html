@@ -58,7 +58,7 @@
 <script type="text/javascript">
 
   window.pong = { games: {} };
-  window.pong.sessionId = Math.random().toString().slice(2, 8);
+  window.pong.sessionId = createOrRetrieveSessionId();
 
   Game.ready(function() {
     _.each([

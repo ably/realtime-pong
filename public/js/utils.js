@@ -48,3 +48,25 @@ function getRealtimes() {
     pusher_translator: pusher_translator,
   };
 }
+
+function randomString() {
+  return Math.random().toString().slice(2, 8);
+}
+
+function createOrRetrieveSessionId() {
+  var key = 'pongSessionId', sessionId;
+  /* Even just checking if the localStorage exists can throw a security
+   * exception in some circumstances with some browsers. So just charge ahead
+   * and try, and rescue any exception. */
+  try {
+    if(sessionId = window.localStorage.getItem(key)) {
+      return sessionId;
+    } else {
+      sessionId = randomString();
+      window.localStorage.setItem(key, sessionId);
+      return sessionId;
+    }
+  } catch(e) {
+    return randomString();
+  }
+}
