@@ -4,6 +4,13 @@
   <title>Pong</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    h2 {
+      border-bottom: 2px solid #bbb;
+      padding-bottom: 10px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,34 +23,41 @@
         <strong>Unable to open controller.</strong> It may have been blocked by your popup blocker -- please allow the window to open in order to play the game.
       </div>
       <h1>Realtime Pong!  <small class="text-muted">An accompaniment to <a href="https://medium.com/@semw/being-protocol-agnostic-at-ably-eb36342a644c">this blog post</a></small></h1>
-      <p>A game of Pong, borrowed <a href="https://www.pubnub.com/developers/demos/pongnub/">from Pubnub (thanks!)</a>, with five separate instances, each using a different realtime backend: Ably, our Pusher adapter, our Pubnub adapter, Pusher and Pubnub. All of them are simultaneously controllable from the same controller, so you can see how well they work. (The first three all use the same Ably channel behind the scene, to demonstrate interoperability). See <a href="https://medium.com/@semw/being-protocol-agnostic-at-ably-eb36342a644c">this blog post</a> for more context.</p>
+      <p>A game of Pong, borrowed <a href="https://www.pubnub.com/developers/demos/pongnub/">from Pubnub (thanks!)</a>, to demonstrate how <a href="https://www.ably.io/adapters">Ably Protocol Adapters</a> provide support for Pusher and PubNub client libraries. This demo provides five separate instances, each using a different realtime client library and service: Ably client (direct), Pusher client with Ably, PubNub client with Ably, Pusher client (direct) and Pubnub client (direct). All of them are simultaneously controllable from the same controller, so you can see how well they work. (The first three all use the same Ably channel behind the scene, to demonstrate interoperability). See <a href="https://medium.com/@semw/being-protocol-agnostic-at-ably-eb36342a644c">this blog post</a> for more context.</p>
       <button id="start" class="btn btn-primary">Start</button>
       <button id="open-controller" class="btn btn-danger">Open controller</button>
     </div>
   </div>
   <div class="row">
+    <div class="col-xs-12">
+      <h2>Realtime powered by Ably</h2>
+    </div>
     <div class="col-xs-12 col-md-6 col-lg-4">
-      <h2>Ably</h2>
+      <h3><img src="./images/ably.png" height="30px">  <a href="https://www.ably.io">Ably</a> </h3>
       <canvas id="ably"></canvas>
     </div>
 
     <div class="col-xs-12 col-md-6 col-lg-4">
-      <h2>Pusher translator</h2>
+      <h3><img src="./images/ably.png" height="30px"> <a href="https://www.ably.io/adapters">Pusher Adapter</a></h3>
       <canvas id="pusher-translator"></canvas>
     </div>
 
     <div class="col-xs-12 col-md-6 col-lg-4">
-      <h2>Pubnub translator</h2>
+      <h3><img src="./images/ably.png" height="30px"> <a href="https://www.ably.io/adapters">PubNub Adapter</a></h3>
       <canvas id="pubnub-translator"></canvas>
     </div>
 
+    <div class="col-xs-12">
+      <h2>Realtime powered by other platforms</h2>
+    </div>
+
     <div class="col-xs-12 col-md-6 col-lg-4">
-      <h2>Pusher</h2>
+      <h3><img src="./images/pusher.png" height="30px"> <a href="https://pusher.com">Pusher</a></h3>
       <canvas id="pusher-native"></canvas>
     </div>
 
     <div class="col-xs-12 col-md-6 col-lg-4">
-      <h2>Pubnub</h2>
+      <h3><img src="./images/pubnub.png" height="30px"> <a href="https://pubnub.com">PubNub</a></h3>
       <canvas id="pubnub-native"></canvas>
     </div>
 
