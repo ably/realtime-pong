@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'pusher'
+require 'ably-rest'
 
 set :static, true
 
@@ -17,6 +18,8 @@ pusher_translator = Pusher::Client.new(
   secret: 'pgpgtFyQ7Da3jOjt',
   host:   'pusher-rest.ably.io'
 )
+
+multiplayer_snake_rest = Ably::Rest.new(key: "TgylBg.umYgYA:yPTJV-tIb8j3fY7D")
 
 post '/auth/pusher' do
   content_type :json
@@ -38,4 +41,11 @@ end
 
 get '/' do
   send_file File.join(settings.public_folder, 'index.html')
+end
+
+get '/auth/multiplayer-snake' do
+  content_type :json
+  multiplayer_snake_rest.auth.create_token_request({
+    capability: {"snake:*" => ['publish', 'subscribe']}
+  }).to_json
 end
