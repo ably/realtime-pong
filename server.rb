@@ -45,6 +45,7 @@ end
 
 get '/auth/multiplayer-snake' do
   content_type :json
+  headers({'Access-Control-Allow-Origin' => '*'})
   multiplayer_snake_rest.auth.create_token_request({
     capability: {"snake:*" => ['publish', 'subscribe']}
   }).to_json
